@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-700;
+  }
+  
+  body {
+    @apply bg-gradient-to-br from-purple-900 via-blue-900 to-cyan-900 text-textPrimary min-h-screen;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-surface bg-opacity-20 backdrop-blur-lg border border-white border-opacity-10 rounded-lg shadow-card;
+  }
+  
+  .glass-button {
+    @apply bg-white bg-opacity-10 backdrop-blur-sm border border-white border-opacity-20 rounded-md hover:bg-opacity-20 transition-all duration-200;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent;
+  }
+  
+  .floating-element {
+    @apply absolute opacity-20 animate-float;
+  }
+  
+  .metric-card {
+    @apply glass-card p-4 hover:bg-opacity-15 transition-all duration-200;
+  }
+  
+  .nav-tab {
+    @apply px-4 py-2 rounded-md text-sm font-medium transition-all duration-200;
+  }
+  
+  .nav-tab-active {
+    @apply bg-primary text-white;
+  }
+  
+  .nav-tab-inactive {
+    @apply text-textSecondary hover:text-textPrimary hover:bg-white hover:bg-opacity-10;
+  }
+}
+
+@layer utilities {
+  .text-display {
+    @apply text-xl font-semibold text-textPrimary;
+  }
+  
+  .text-heading {
+    @apply text-lg font-medium text-textPrimary;
+  }
+  
+  .text-body {
+    @apply text-base leading-6 text-textSecondary;
+  }
+  
+  .text-caption {
+    @apply text-sm leading-5 text-textSecondary;
+  }
+}
