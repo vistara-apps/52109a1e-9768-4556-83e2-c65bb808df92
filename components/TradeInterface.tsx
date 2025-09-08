@@ -12,7 +12,13 @@ export function TradeInterface() {
   const [fromAmount, setFromAmount] = useState('');
   const [toAmount, setToAmount] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [routeData, setRouteData] = useState(null);
+  const [routeData, setRouteData] = useState<{
+    estimatedOutput: string;
+    priceImpact: number;
+    slippage: number;
+    fees: string;
+    route: string[];
+  } | null>(null);
 
   const { setFrameReady } = useMiniKit();
 

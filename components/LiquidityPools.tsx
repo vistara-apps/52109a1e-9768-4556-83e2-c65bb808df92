@@ -22,7 +22,7 @@ export function LiquidityPools() {
         case 'apy':
           return (b.apy || 0) - (a.apy || 0);
         case 'volume':
-          return Number((b.volume24h || 0n) - (a.volume24h || 0n));
+          return Number((b.volume24h || BigInt(0)) - (a.volume24h || BigInt(0)));
         default:
           return 0;
       }

@@ -127,7 +127,7 @@ export function RouteDisplay({
       </div>
 
       {/* Execute Trade Button */}
-      <TradeButton>
+      <TradeButton onClick={() => console.log('Execute trade')}>
         Execute Trade
       </TradeButton>
 
