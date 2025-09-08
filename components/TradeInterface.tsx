@@ -1,20 +1,24 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowUpDown, Settings2, RefreshCw } from 'lucide-react';
+import { ArrowUpDown, Zap, Info } from 'lucide-react';
 import { TokenInput } from './TokenInput';
 import { TradeButton } from './TradeButton';
-import { RouteDisplay } from './RouteDisplay';
-import { SUPPORTED_TOKENS } from '@/lib/constants';
+import { useMiniKit } from '@coinbase/onchainkit/minikit';
 
 export function TradeInterface() {
-  const [fromAmount, setFromAmount] = useState('');
-  const [toAmount, setToAmount] = useState('');
   const [fromToken, setFromToken] = useState('ETH');
   const [toToken, setToToken] = useState('USDC');
+  const [fromAmount, setFromAmount] = useState('');
+  const [toAmount, setToAmount] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [showRoute, setShowRoute] = useState(false);
-  const [slippage, setSlippage] = useState(0.5);
+  const [routeData, setRouteData] = useState(null);
+
+  const { setFrameReady } = useMiniKit();
+
+  useEffect(() => {
+    setFrameReady();
+  }, [setFrameReady]);
 
   const handleSwapTokens = () => {
     setFromToken(toToken);
@@ -24,107 +28,149 @@ export function TradeInterface() {
   };
 
   const handleGetBestRoute = async () => {
-    if (!fromAmount || parseFloat(fromAmount) <= 0) return;
-    
+    if (!fromAmount || !fromToken || !toToken) return;
+
     setIsLoading(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Simulate API call for route calculation
+    setTimeout(() => {
+      const mockRoute = {
+        estimatedOutput: '3,487.52',
+        priceImpact: 0.12,
+        slippage: 0.5,
+        fees: '2.45',
+        route: ['Uniswap V3 (60%)', 'Aerodrome (40%)']
+      };
+      
+      setRouteData(mockRoute);
+      setToAmount(mockRoute.estimatedOutput);
+      setIsLoading(false);
+    }, 2000);
+  };
+
+  const handleExecuteTrade = async () => {
+    setIsLoading(true);
     
-    // Mock calculation
-    const mockRate = fromToken === 'ETH' ? 3500 : 0.000286;
-    const calculatedAmount = (parseFloat(fromAmount) * mockRate).toFixed(6);
-    setToAmount(calculatedAmount);
-    setShowRoute(true);
-    setIsLoading(false);
+    // Simulate trade execution
+    setTimeout(() => {
+      setIsLoading(false);
+      // Reset form
+      setFromAmount('');
+      setToAmount('');
+      setRouteData(null);
+    }, 3000);
   };
 
   return (
     <div className="space-y-6">
-      {/* Trade Input Section */}
+      {/* Trade Form */}
       <div className="glass-card p-6 space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-4">
           <h2 className="text-heading">Swap Tokens</h2>
-          <button className="glass-button p-2 rounded-md">
-            <Settings2 className="w-4 h-4 text-textSecondary" />
+          <button className="glass-button p-2">
+            <Info size={16} />
           </button>
         </div>
 
         <TokenInput
           label="From"
-          value={fromAmount}
-          onChange={setFromAmount}
-          selectedToken={fromToken}
+          value={fromToken}
+          amount={fromAmount}
           onTokenChange={setFromToken}
+          onAmountChange={setFromAmount}
+          showBalance
+          balance="12.5847"
         />
 
+        {/* Swap Button */}
         <div className="flex justify-center">
           <button
             onClick={handleSwapTokens}
             className="glass-button p-3 rounded-full hover:bg-opacity-20 transition-all duration-200"
           >
-            <ArrowUpDown className="w-5 h-5 text-textPrimary" />
+            <ArrowUpDown size={20} />
           </button>
         </div>
 
         <TokenInput
           label="To"
-          value={toAmount}
-          onChange={setToAmount}
-          selectedToken={toToken}
+          value={toToken}
+          amount={toAmount}
           onTokenChange={setToToken}
-          disabled={true}
+          onAmountChange={setToAmount}
+          showBalance
+          balance="0.00"
         />
 
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-textSecondary">Slippage Tolerance</span>
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setSlippage(0.1)}
-              className={`px-2 py-1 rounded text-xs ${
-                slippage === 0.1 ? 'bg-primary text-white' : 'text-textSecondary hover:text-textPrimary'
-              }`}
-            >
-              0.1%
-            </button>
-            <button
-              onClick={() => setSlippage(0.5)}
-              className={`px-2 py-1 rounded text-xs ${
-                slippage === 0.5 ? 'bg-primary text-white' : 'text-textSecondary hover:text-textPrimary'
-              }`}
-            >
-              0.5%
-            </button>
-            <button
-              onClick={() => setSlippage(1.0)}
-              className={`px-2 py-1 rounded text-xs ${
-                slippage === 1.0 ? 'bg-primary text-white' : 'text-textSecondary hover:text-textPrimary'
-              }`}
-            >
-              1.0%
-            </button>
+        {/* Route Information */}
+        {routeData && (
+          <div className="glass-card p-4 space-y-3">
+            <div className="flex items-center space-x-2">
+              <Zap size={16} className="text-accent" />
+              <span className="text-sm font-medium">Best Route Found</span>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="text-textSecondary">Price Impact:</span>
+                <span className="ml-2 text-warning">{routeData.priceImpact}%</span>
+              </div>
+              <div>
+                <span className="text-textSecondary">Max Slippage:</span>
+                <span className="ml-2 text-textPrimary">{routeData.slippage}%</span>
+              </div>
+              <div>
+                <span className="text-textSecondary">Network Fee:</span>
+                <span className="ml-2 text-textPrimary">${routeData.fees}</span>
+              </div>
+              <div>
+                <span className="text-textSecondary">Route:</span>
+                <span className="ml-2 text-accent text-xs">{routeData.route.join(', ')}</span>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
 
-        <TradeButton
-          onClick={handleGetBestRoute}
-          loading={isLoading}
-          disabled={!fromAmount || parseFloat(fromAmount) <= 0}
-        >
-          Get Best Route
-        </TradeButton>
+        {/* Action Buttons */}
+        <div className="space-y-3">
+          {!routeData ? (
+            <TradeButton
+              onClick={handleGetBestRoute}
+              loading={isLoading}
+              disabled={!fromAmount || !fromToken || !toToken}
+            >
+              Get Best Route
+            </TradeButton>
+          ) : (
+            <TradeButton
+              onClick={handleExecuteTrade}
+              loading={isLoading}
+            >
+              Execute Trade
+            </TradeButton>
+          )}
+          
+          <TradeButton variant="secondary" onClick={() => setRouteData(null)}>
+            Clear Route
+          </TradeButton>
+        </div>
       </div>
 
-      {/* Route Display */}
-      {showRoute && !isLoading && (
-        <RouteDisplay
-          fromToken={fromToken}
-          toToken={toToken}
-          fromAmount={fromAmount}
-          toAmount={toAmount}
-          slippage={slippage}
-        />
-      )}
+      {/* Quick Stats */}
+      <div className="grid grid-cols-3 gap-4">
+        <div className="metric-card text-center">
+          <div className="text-display gradient-text">14,587</div>
+          <div className="text-caption">Total Pools</div>
+        </div>
+        <div className="metric-card text-center">
+          <div className="text-display text-success">$2.1M</div>
+          <div className="text-caption">24h Volume</div>
+        </div>
+        <div className="metric-card text-center">
+          <div className="text-display text-accent">0.12%</div>
+          <div className="text-caption">Avg Slippage</div>
+        </div>
+      </div>
     </div>
   );
 }

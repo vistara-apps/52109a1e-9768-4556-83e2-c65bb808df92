@@ -1,6 +1,6 @@
 'use client';
 
-import { BarChart3, ArrowUpDown, Settings2, TrendingUp, Zap } from 'lucide-react';
+import { BarChart3, ArrowUpDown, Settings2, TrendingUp, PieChart } from 'lucide-react';
 
 interface NavTabsProps {
   activeTab: string;
@@ -8,16 +8,16 @@ interface NavTabsProps {
 }
 
 const tabs = [
-  { id: 'trade', label: 'Swap AI Follow', icon: ArrowUpDown },
-  { id: 'pools', label: 'Pools', icon: Zap },
+  { id: 'trade', label: 'Swap', icon: ArrowUpDown },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+  { id: 'pools', label: 'Pools', icon: PieChart },
   { id: 'portfolio', label: 'Portfolio', icon: TrendingUp },
   { id: 'settings', label: 'Settings', icon: Settings2 },
 ];
 
 export function NavTabs({ activeTab, onTabChange }: NavTabsProps) {
   return (
-    <div className="flex space-x-2 overflow-x-auto pb-2">
+    <div className="flex space-x-1 glass-card p-1">
       {tabs.map((tab) => {
         const Icon = tab.icon;
         const isActive = activeTab === tab.id;
@@ -26,12 +26,12 @@ export function NavTabs({ activeTab, onTabChange }: NavTabsProps) {
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className={`nav-tab flex items-center space-x-2 whitespace-nowrap ${
+            className={`nav-tab flex-1 flex items-center justify-center space-x-1 ${
               isActive ? 'nav-tab-active' : 'nav-tab-inactive'
             }`}
           >
-            <Icon className="w-4 h-4" />
-            <span>{tab.label}</span>
+            <Icon size={16} />
+            <span className="hidden sm:inline">{tab.label}</span>
           </button>
         );
       })}

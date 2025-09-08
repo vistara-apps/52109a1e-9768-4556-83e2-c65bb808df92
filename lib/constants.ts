@@ -111,6 +111,6 @@ export const SUBSCRIPTION_TIERS = {
     name: 'Premium',
     price: 15,
     dailyLookups: -1, // unlimited
-    features: ['Unlimited lookups', 'AI insights', 'Custom alerts', 'API access']
+    features: ['Unlimited lookups', 'Real-time alerts', 'Custom strategies', 'API access']
   }
 };

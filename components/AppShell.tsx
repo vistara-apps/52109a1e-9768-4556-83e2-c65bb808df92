@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useMiniKit } from '@coinbase/onchainkit/minikit';
+import { useState } from 'react';
 import { NavTabs } from './NavTabs';
 import { FloatingElements } from './FloatingElements';
 
@@ -10,12 +9,7 @@ interface AppShellProps {
 }
 
 export function AppShell({ children }: AppShellProps) {
-  const { setFrameReady } = useMiniKit();
   const [activeTab, setActiveTab] = useState('trade');
-
-  useEffect(() => {
-    setFrameReady();
-  }, [setFrameReady]);
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -27,14 +21,18 @@ export function AppShell({ children }: AppShellProps) {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-r from-accent to-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">BL</span>
+                <span className="text-white font-bold text-sm">B</span>
               </div>
-              <h1 className="text-display gradient-text">Base Liquidity Navigator</h1>
+              <span className="text-heading">Base Liquidity Navigator</span>
+            </div>
+            
+            <div className="glass-button px-3 py-1">
+              <span className="text-caption">Connected</span>
             </div>
           </div>
           
-          <p className="text-body mb-6">
-            Your liquidity for your swap needs. Join us on token ring and an online
+          <p className="text-body text-center mb-6">
+            Your liquidity for your scan needs. Join us now on token ring and an online
             to the trading your limit and get best liquidity matching.
           </p>
           
