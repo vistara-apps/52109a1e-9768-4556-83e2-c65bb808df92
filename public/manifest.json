@@ -1,0 +1,14 @@
+{
+  "name": "Base Liquidity Navigator",
+  "description": "Base Liquidity Navigator is a Base Mini App built with Zara.",
+  "image": "https://dummyimage.com/1200x628/0a0b0d/ffffff.png&text=OG",
+  "external_url": "https://52109a1e-9768-4556-83e2-c65bb808df92.vercel.app",
+  "properties": {
+    "app": {
+      "name": "Base Liquidity Navigator",
+      "description": "Base Liquidity Navigator is a Base Mini App built with Zara.",
+      "url": "https://52109a1e-9768-4556-83e2-c65bb808df92.vercel.app",
+      "icon": "https://0co.to/images/zara-2.png"
+    }
+  }
+}

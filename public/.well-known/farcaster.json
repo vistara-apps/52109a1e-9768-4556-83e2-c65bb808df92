@@ -1,0 +1,30 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "frame": {
+    "version": "1",
+    "name": "Base Liquidity Navigator",
+    "subtitle": "Built with Zara",
+    "description": "Base Liquidity Navigator is a Base Mini App built with Zara.",
+    "iconUrl": "https://0co.to/images/zara-2.png",
+    "homeUrl": "https://52109a1e9768455683e2c65bb808df92-3ex7.vercel.app",
+    "splashImageUrl": "https://52109a1e9768455683e2c65bb808df92-3ex7.vercel.app/splash.png",
+    "splashBackgroundColor": "#000000",
+    "heroImageUrl": "https://52109a1e9768455683e2c65bb808df92-3ex7.vercel.app/image.png",
+    "tagline": "Base Liquidity Navigator",
+    "screenshotUrls": [
+      "https://52109a1e9768455683e2c65bb808df92-3ex7.vercel.app/screenshot.png",
+      "https://52109a1e9768455683e2c65bb808df92-3ex7.vercel.app/screenshot.png"
+    ],
+    "primaryCategory": "social",
+    "tags": [
+      "base",
+      "miniapp",
+      "onchainkit"
+    ],
+    "webhookUrl": "https://52109a1e9768455683e2c65bb808df92-3ex7.vercel.app/api/webhook"
+  }
+}
