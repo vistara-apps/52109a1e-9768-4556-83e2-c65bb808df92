@@ -22,7 +22,7 @@ export function LiquidityScanner() {
   };
 
   const totalLiquidity = pools.reduce((sum, pool) => sum + Number(pool.liquidity), 0);
-  const totalVolume = pools.reduce((sum, pool) => sum + Number(pool.volume24h || 0n), 0);
+  const totalVolume = pools.reduce((sum, pool) => sum + Number(pool.volume24h || 0), 0);
 
   return (
     <div className="space-y-6">

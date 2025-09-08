@@ -11,8 +11,8 @@ interface LiquiditySummaryCardProps {
 
 export function LiquiditySummaryCard({ pool, rank }: LiquiditySummaryCardProps) {
   const totalLiquidity = formatNumber(Number(pool.liquidity) / 1e18);
-  const volume24h = formatNumber(Number(pool.volume24h || 0n) / 1e6);
-  const fees24h = formatCurrency(Number(pool.fees24h || 0n) / 1e6);
+  const volume24h = formatNumber(Number(pool.volume24h || 0) / 1e6);
+  const fees24h = formatCurrency(Number(pool.fees24h || 0) / 1e6);
   
   return (
     <div className="metric-card">
